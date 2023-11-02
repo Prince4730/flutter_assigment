@@ -73,7 +73,7 @@ class _RenderWebViewState extends State<RenderWebView> {
         ],
       ),
       body: ListView(
-        shrinkWrap: false,
+        shrinkWrap: true,
         children: [
           const SizedBox(
             height: 4,
@@ -92,6 +92,13 @@ class _RenderWebViewState extends State<RenderWebView> {
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: WebViewWidget(
+              gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                Factory<VerticalDragGestureRecognizer>(
+                    () => VerticalDragGestureRecognizer()),
+                Factory<HorizontalDragGestureRecognizer>(
+                    () => HorizontalDragGestureRecognizer()),
+                Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()),
+              },
               controller: _controller,
             ),
           ),
@@ -154,7 +161,7 @@ class _RenderWebViewState extends State<RenderWebView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  _buildOption("ACancel"),
+                  _buildOption("Cancel"),
                   const SizedBox(
                     height: 8,
                   ),
@@ -384,11 +391,10 @@ class _RenderWebViewState extends State<RenderWebView> {
           Expanded(
             child: OutlinedButton(
               style: ButtonStyle(
-                shape: MaterialStateProperty.resolveWith<OutlinedBorder?>((states) {
-
-
-                  return RoundedRectangleBorder(borderRadius: BorderRadius.circular(8));
-
+                shape: MaterialStateProperty.resolveWith<OutlinedBorder?>(
+                    (states) {
+                  return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8));
                 }),
               ),
               onPressed: () {
@@ -404,7 +410,10 @@ class _RenderWebViewState extends State<RenderWebView> {
                   ),
                   Text(
                     "Reply",
-                    style: TextStyle(color: kBlack45Color, fontSize: 14,fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                        color: kBlack45Color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
                   )
                 ],
               ),
@@ -415,15 +424,13 @@ class _RenderWebViewState extends State<RenderWebView> {
           ),
           Expanded(
             child: OutlinedButton(
-
-               style: ButtonStyle(
-                 shape: MaterialStateProperty.resolveWith<OutlinedBorder?>((states) {
-
-
-                     return RoundedRectangleBorder(borderRadius: BorderRadius.circular(8));
-
-                 }),
-               ),
+              style: ButtonStyle(
+                shape: MaterialStateProperty.resolveWith<OutlinedBorder?>(
+                    (states) {
+                  return RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8));
+                }),
+              ),
               onPressed: () {
                 // Handle the second button's action.
               },
@@ -437,7 +444,10 @@ class _RenderWebViewState extends State<RenderWebView> {
                   ),
                   Text(
                     "Forward",
-                    style: TextStyle(color: kBlack45Color, fontSize: 14,fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                        color: kBlack45Color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
                   )
                 ],
               ),
