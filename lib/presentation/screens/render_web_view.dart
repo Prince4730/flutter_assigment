@@ -27,6 +27,7 @@ class _RenderWebViewState extends State<RenderWebView> {
     super.initState();
     isFav = widget.mail.isFavourite;
     _controller = WebViewController();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadFile();
     });
@@ -73,12 +74,15 @@ class _RenderWebViewState extends State<RenderWebView> {
         ],
       ),
       body: ListView(
-        shrinkWrap: true,
+       shrinkWrap: true,
         children: [
           const SizedBox(
             height: 4,
           ),
           _buildSubject(),
+         const  SizedBox(
+            height: 8,
+          ),
           _buildLabel(),
           const SizedBox(
             height: 16,
@@ -90,16 +94,25 @@ class _RenderWebViewState extends State<RenderWebView> {
             ),
           if (showDetailContainer) _buildEmailsDetailContainer(),
           SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: WebViewWidget(
-              gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
-                Factory<VerticalDragGestureRecognizer>(
-                    () => VerticalDragGestureRecognizer()),
-                Factory<HorizontalDragGestureRecognizer>(
-                    () => HorizontalDragGestureRecognizer()),
-                Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()),
-              },
-              controller: _controller,
+            height: 1.3*MediaQuery.of(context).size.height,
+            child: Expanded(
+              child: WebViewWidget(
+
+
+                gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+
+              Factory<LongPressGestureRecognizer>(() =>
+              LongPressGestureRecognizer(
+
+              )),
+                  Factory<VerticalDragGestureRecognizer>(
+                      () => VerticalDragGestureRecognizer()),
+                  Factory<HorizontalDragGestureRecognizer>(
+                      () => HorizontalDragGestureRecognizer()),
+                  Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()),
+                },
+                controller: _controller,
+              ),
             ),
           ),
           const SizedBox(
@@ -172,7 +185,7 @@ class _RenderWebViewState extends State<RenderWebView> {
 
   Widget _buildOption(String title) {
     return ListTile(
-      title: Text(
+      title: SelectableText(
         title,
         style: const TextStyle(
             color: kBlackColor, fontSize: 14, fontWeight: FontWeight.w400),
@@ -186,10 +199,11 @@ class _RenderWebViewState extends State<RenderWebView> {
   Widget _buildSubject() {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Text(
+      child: SelectableText(
+
         widget.mail.msg,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-        maxLines: 3,
+     //   maxLines: 3,
       ),
     );
   }
@@ -207,7 +221,7 @@ class _RenderWebViewState extends State<RenderWebView> {
             child: const Padding(
               padding: EdgeInsets.all(4.0),
               child: Center(
-                  child: Text(
+                  child: SelectableText(
                 "Inbox",
                 style: TextStyle(
                     color: kBlackColor,
@@ -265,18 +279,19 @@ class _RenderWebViewState extends State<RenderWebView> {
       children: [
         Row(
           children: [
-            Text(
+            SelectableText(
               widget.mail.sender,
-              overflow: TextOverflow.ellipsis,
+            //  overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 12,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             const SizedBox(
               width: 6,
             ),
-            Text(
+            SelectableText(
               widget.mail.date,
               style: const TextStyle(
                   fontWeight: FontWeight.normal,
@@ -287,7 +302,7 @@ class _RenderWebViewState extends State<RenderWebView> {
         ),
         Row(
           children: [
-            const Text(
+            const SelectableText(
               "to me",
               style: TextStyle(
                   fontWeight: FontWeight.normal,
@@ -364,7 +379,7 @@ class _RenderWebViewState extends State<RenderWebView> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        SelectableText(
           title,
           style: const TextStyle(
               color: kGreyColor, fontSize: 12, fontWeight: FontWeight.w400),
@@ -372,7 +387,7 @@ class _RenderWebViewState extends State<RenderWebView> {
         const SizedBox(
           width: 32,
         ),
-        Text(
+        SelectableText(
           subTitle,
           style: const TextStyle(
               color: kBlackColor, fontSize: 12, fontWeight: FontWeight.w400),
@@ -408,7 +423,7 @@ class _RenderWebViewState extends State<RenderWebView> {
                   SizedBox(
                     width: 4,
                   ),
-                  Text(
+                  SelectableText(
                     "Reply",
                     style: TextStyle(
                         color: kBlack45Color,
@@ -442,7 +457,7 @@ class _RenderWebViewState extends State<RenderWebView> {
                   SizedBox(
                     width: 4,
                   ),
-                  Text(
+                  SelectableText(
                     "Forward",
                     style: TextStyle(
                         color: kBlack45Color,
@@ -457,4 +472,7 @@ class _RenderWebViewState extends State<RenderWebView> {
       ),
     );
   }
+
+
+
 }
